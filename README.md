@@ -4,6 +4,40 @@ nebula-exercises
 
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
+level 14
+--------
+
+##### inspect flag14 binary
+
+```bash
+level14@nebula:~$ python -c "print 'a'*5" | /home/flag14/flag14 -e
+abcde
+
+level14@nebula:~$ python -c "print 'b'*5" | /home/flag14/flag14 -e
+bcdef
+
+# y = chr(ord(x) + pos(x))
+```
+
+##### write a reverse script
+```python
+# reverse.py
+# read token in /home/flag14/token
+token = "857:g67?5ABBo:BtDA?tIvLDKL{MQPSRQWW."
+reverse = ""
+
+for i, c in enumerate(token):
+    reverse += chr(ord(c) - i)
+
+print(reverse)
+# --> output: 8457c118-887c-4e40-a5a6-33a25353165
+```
+##### check reverse.py
+```bash
+python reverse.py | /home/flag14/flag14 -e
+857:g67?5ABBo:BtDA?tIvLDKL{MQPSRQWW.
+```
+
 
 level 15
 --------
