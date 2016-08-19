@@ -38,6 +38,14 @@ python reverse.py | /home/flag14/flag14 -e
 857:g67?5ABBo:BtDA?tIvLDKL{MQPSRQWW.
 ```
 
+##### use reversed token as pwd for flag14 user and execute getflag
+```
+level14@nebula:~$ su - flag14
+Password: 
+flag14@nebula:~$ getflag 
+You have successfully executed getflag on a target account
+```
+
 
 level 15
 --------
