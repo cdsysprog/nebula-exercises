@@ -5,6 +5,34 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 08
+--------
+
+##### inspect capture.pcap and observe the login session
+```bash
+# wireshark may be used
+packet nb 43: from 59.233.235.223 (@S) to 59.233.235.218 (@C)
+--> "Password:"
+then, one byte data character per packet from @C to @S:
+--> ['b', 'a', 'c', 'k',          \
+     'd', 'o', 'o', 'r',          \
+     '0x7F', '0x7F', '0x7F', '0', \
+     '0', 'R', 'm', '8',          \
+     '0x7F', 'a', 't', 'e']
+
+# man ascii shows that '0x7F' is DEL char
+--> Password: backdOORmate
+```
+
+##### use password for flag08 user and execute getflag
+```bash
+level08@nebula:~$ su - flag08
+Password: # backdOORmate
+flag08@nebula:~$ getflag 
+You have successfully executed getflag on a target account
+```
+
+
 level 09
 --------
 
