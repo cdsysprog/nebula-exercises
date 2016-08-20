@@ -5,6 +5,20 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 00
+--------
+
+##### see man find to filter user and permissions
+```bash
+level00@nebula:~$ find / -user flag00 -perm /u+s 2>/dev/null
+/bin/.../flag00
+/rofs/bin/.../flag00
+
+level00@nebula:~$ /bin/.../flag00 
+Congrats, now run getflag to get your flag!
+```
+
+
 level 01
 --------
 
